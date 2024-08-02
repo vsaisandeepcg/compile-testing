@@ -1,6 +1,5 @@
-# .github/workflows/dotnet-build.yml
 
-name: Build and Test .NET Application
+name: Compile Action .NET Application
 
 on:
   push:
@@ -21,16 +20,16 @@ jobs:
       - name: Set Up .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '3.1.x'  # Specify the version of .NET you want to use
+          dotnet-version: '3.1.x'  
 
       - name: Restore Dependencies
-        run: dotnet restore  # Restore dependencies specified in the project file
+        run: dotnet restore  
 
       - name: Build the Project
-        run: dotnet build --configuration Release  # Build the project in Release mode
+        run: dotnet build --configuration Release  
 
       - name: Run Tests
-        run: dotnet test --configuration Release  # Run tests in Release mode
+        run: dotnet test --configuration Release  
 
       - name: Publish the Project
         run: dotnet publish --configuration Release --output ./output  # Publish the project
@@ -39,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dotnet-output
-          path: ./output  # Specify the path to the published output
+          path: ./output 
