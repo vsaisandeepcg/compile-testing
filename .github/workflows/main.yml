@@ -1,0 +1,42 @@
+# .github/workflows/dotnet-build.yml
+
+name: Build and Test .NET Application
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set Up .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '3.1.x'  # Specify the version of .NET you want to use
+
+      - name: Restore Dependencies
+        run: dotnet restore  # Restore dependencies specified in the project file
+
+      - name: Build the Project
+        run: dotnet build --configuration Release  # Build the project in Release mode
+
+      - name: Run Tests
+        run: dotnet test --configuration Release  # Run tests in Release mode
+
+      - name: Publish the Project
+        run: dotnet publish --configuration Release --output ./output  # Publish the project
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotnet-output
+          path: ./output  # Specify the path to the published output
